@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Muhammed Ali & Shifana Thasni | Wedding Invitation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0b1426;
+    --navy-2: #13223d;
+    --gold: #e9c46a;
+    --gold-soft: #f5dc9a;
+    --text: #e8e4da;
+    --muted: #a9b3c6;
+    --line: rgba(233,196,106,.35);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; background: var(--navy); }
+  body {
+    font-family: 'Montserrat', system-ui, sans-serif;
+    background: radial-gradient(ellipse at top, var(--navy-2), var(--navy) 70%);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  main { position: relative; z-index: 1; max-width: 460px; margin: 0 auto; padding: 0 20px; }
+  section { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 60px 0; }
+  .eyebrow { font-size: 11px; letter-spacing: .35em; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; }
+  h1, h2 { font-family: 'Playfair Display', Georgia, serif; font-weight: 400; line-height: 1.2; color: var(--text); }
+  h1 { font-size: 40px; }
+  h1 em, h2 em { color: var(--gold); font-style: italic; }
+  h2 { font-size: 32px; margin-bottom: 14px; }
+  p { color: var(--muted); line-height: 1.7; font-size: 15px; }
+  .names { font-family: 'Playfair Display', serif; font-size: 26px; color: var(--gold-soft); margin: 18px 0 8px; }
+  .names span { display: block; font-size: 14px; color: var(--muted); letter-spacing: .15em; font-family: 'Montserrat'; margin: 4px 0; }
+
+  /* Hero */
+  .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 60px 0; }
+  .hero-text { transition: opacity .3s; }
+  .hint { font-size: 12px; color: var(--muted); margin-top: 16px; letter-spacing: .05em; }
+
+  /* Rings: fixed overlay that travels down while you scroll and joins at the end */
+  #rings {
+    position: fixed; left: 50%; top: 10vh; transform: translateX(-50%);
+    width: min(340px, 90vw); z-index: 5; pointer-events: none;
+    filter: drop-shadow(0 8px 14px rgba(0,0,0,.45));
+  }
+  #rings svg { width: 100%; height: auto; display: block; }
+
+  /* Buttons */
+  .btn {
+    display: inline-block; margin-top: 26px; padding: 15px 34px; border-radius: 40px;
+    background: linear-gradient(135deg, #f5dc9a, #d4a94a); color: #1a1406;
+    font-family: 'Montserrat'; font-weight: 500; font-size: 14px; letter-spacing: .05em;
+    text-decoration: none; border: none; cursor: pointer; box-shadow: 0 8px 24px rgba(233,196,106,.25);
+  }
+  .btn.ghost { background: transparent; color: var(--text); border: 1px solid rgba(233,196,106,.5); box-shadow: none; }
+
+  /* Cards */
+  .card {
+    width: 100%; background: linear-gradient(180deg, rgba(19,34,61,.9), rgba(11,20,38,.9));
+    border: 1px solid var(--line); border-radius: 22px; padding: 36px 24px;
+    box-shadow: 0 20px 50px rgba(0,0,0,.4);
+  }
+  .meta { display: flex; flex-direction: column; gap: 10px; margin-top: 22px; color: var(--gold-soft); font-size: 14px; }
+
+  /* Countdown */
+  .countdown { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; width: 100%; margin-top: 22px; }
+  .countdown div { border: 1px solid var(--line); border-radius: 14px; padding: 16px 4px; background: rgba(19,34,61,.6); }
+  .countdown b { display: block; font-family: 'Playfair Display', serif; font-weight: 400; font-size: 30px; color: var(--gold); }
+  .countdown small { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+
+  .pin { font-size: 28px; margin-top: 4px; }
+
+  /* Decorative gold frame inside each card */
+  .card { position: relative; }
+  .card::before {
+    content: ""; position: absolute; inset: 8px; border: 1px solid rgba(233,196,106,.25);
+    border-radius: 16px; pointer-events: none;
+  }
+
+  /* Little gold burst when a button is tapped */
+  .burst {
+    position: fixed; z-index: 20; pointer-events: none; color: #f5dc9a; font-size: 16px;
+    transform: translate(-50%, -50%); animation: burst 1s ease-out forwards;
+  }
+  @keyframes burst {
+    to { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))); opacity: 0; }
+  }
+  footer { position: relative; z-index: 1; padding: 40px 0 60px; text-align: center; }
+  footer .sig { font-family: 'Playfair Display', serif; font-style: italic; color: var(--gold-soft); font-size: 18px; }
+
+  /* Floating gold sparkles behind the content */
+  #sparkles { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+
+  /* Shimmering gold names */
+  .names {
+    background: linear-gradient(100deg, #b8862b 20%, #fff3c4 40%, #e9c46a 50%, #b8862b 70%);
+    background-size: 220% auto;
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    animation: shimmer 5s linear infinite;
+  }
+  .names span { -webkit-background-clip: border-box; background-clip: border-box; color: var(--muted); background: none; animation: none; }
+  @keyframes shimmer { to { background-position: 220% center; } }
+
+  /* Gently pulsing glow on the main button */
+  .btn:not(.ghost) { animation: glow 2.8s ease-in-out infinite; }
+  @keyframes glow {
+    0%, 100% { box-shadow: 0 8px 24px rgba(233,196,106,.25); }
+    50% { box-shadow: 0 8px 34px rgba(233,196,106,.6); }
+  }
+
+  .fade { opacity: 0; transform: translateY(20px); transition: opacity .9s ease, transform .9s ease; }
+  .fade.show { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<canvas id="sparkles"></canvas>
+
+<!-- Rings overlay (moves while scrolling) -->
+<div id="rings" aria-label="Wedding rings">
+  <svg viewBox="0 0 360 150">
+    <defs>
+      <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#8f6a1c"/>
+        <stop offset="22%" stop-color="#f7e7a6"/>
+        <stop offset="45%" stop-color="#c9a04a"/>
+        <stop offset="68%" stop-color="#fff4c4"/>
+        <stop offset="100%" stop-color="#8a6419"/>
+      </linearGradient>
+      <clipPath id="rightHalf"><rect x="180" y="0" width="180" height="150"/></clipPath>
+      <g id="ring">
+        <circle r="60" fill="none" stroke="#3a2a08" stroke-width="14" opacity=".5" transform="translate(1.5,2)"/>
+        <circle r="60" fill="none" stroke="url(#gold)" stroke-width="13"/>
+        <circle r="53.5" fill="none" stroke="#fff3c0" stroke-width="1.6" opacity=".8"/>
+        <circle r="66.5" fill="none" stroke="#6b4c10" stroke-width="1" opacity=".5"/>
+        <path d="M -40 -34 A 60 60 0 0 1 -12 -59" fill="none" stroke="#fffbe6" stroke-width="3" stroke-linecap="round" opacity=".85"/>
+      </g>
+    </defs>
+    <use id="ringA" href="#ring" x="80" y="75"/>
+    <use id="ringB" href="#ring" x="280" y="75"/>
+    <!-- Re-draw the right ring's crossing so the two interlock (one over, one under) -->
+    <use id="ringB2" href="#ring" x="280" y="75" clip-path="url(#rightHalf)"/>
+  </svg>
+</div>
+
+<header class="hero" id="top">
+  <div class="hero-text" id="heroText">
+    <p class="eyebrow">A little forever</p>
+    <h1>Come begin<br><em>our beginning.</em></h1>
+    <p style="margin-top:14px">We found our forever<br>in the quietest smiles.</p>
+    <p class="eyebrow" style="margin-top:40px">Muhammed Ali &amp; Shifana Thasni</p>
+    <a href="#invite" class="btn">Open our invitation ♡</a>
+    <p class="hint">Scroll down ↓</p>
+  </div>
+</header>
+
+<main>
+
+  <!-- Invitation -->
+  <section id="invite">
+    <div class="card fade">
+      <p class="eyebrow">Together with our families</p>
+      <p style="margin-top:10px">You are warmly invited</p>
+      <div class="names">Shifana Thasni<span>&amp;</span>Muhammed Ali</div>
+      <p>We would be delighted to have you with us as we begin our new journey together.</p>
+      <div class="meta">
+        <div>Thursday, 7 January 2027</div>
+        <div>VKH Auditorium, Theyyala</div>
+      </div>
+    </div>
+    <p class="fade" style="margin-top:28px">We look forward to celebrating this special day with you.</p>
+    <a href="#countdown" class="btn ghost fade">See the countdown ↓</a>
+  </section>
+
+  <!-- Countdown -->
+  <section id="countdown">
+    <p class="eyebrow fade">Until we say “I do”</p>
+    <h2 class="fade">Every second brings us <em>closer together.</em></h2>
+    <p class="fade">7 January 2027</p>
+    <div class="countdown fade">
+      <div><b id="d">--</b><small>Days</small></div>
+      <div><b id="h">--</b><small>Hours</small></div>
+      <div><b id="m">--</b><small>Minutes</small></div>
+      <div><b id="s">--</b><small>Seconds</small></div>
+    </div>
+  </section>
+
+  <!-- Venue -->
+  <section id="venue">
+    <p class="eyebrow fade">Find us here</p>
+    <h2 class="fade">Our special day <em>starts here.</em></h2>
+    <div class="card fade">
+      <div class="pin">📍</div>
+      <div class="names" style="font-size:22px">VKH Auditorium, Theyyala</div>
+      <p>Thursday · 7 January 2027</p>
+      <a class="btn" href="https://www.google.com/maps/search/?api=1&query=VKH+Auditorium+Theyyala" target="_blank" rel="noopener">Open location in Maps ↗</a>
+    </div>
+    <p class="fade" style="margin-top:30px">With love,<br>Muhammed Ali &amp; Shifana Thasni</p>
+    <a href="#top" class="btn ghost fade" style="margin-top:20px">Back to beginning ↑</a>
+  </section>
+
+</main>
+
+<footer>
+  <p class="sig">With love, Muhammed Ali &amp; Shifana Thasni</p>
+  <p style="margin-top:10px">Made with love ♡</p>
+</footer>
+
+<script>
+  const ringsEl = document.getElementById('rings');
+  const ringA = document.getElementById('ringA');
+  const ringB = document.getElementById('ringB');
+  const ringB2 = document.getElementById('ringB2');
+  const heroText = document.getElementById('heroText');
+
+  // Scroll progress 0..1 across the whole page (works whichever element scrolls)
+  let progress = 0;
+  function readProgress(target) {
+    let el = target && target.nodeType === 1 ? target : document.scrollingElement;
+    if (!el || target === document) el = document.scrollingElement;
+    const max = el.scrollHeight - el.clientHeight;
+    if (max > 0) progress = Math.min(Math.max(el.scrollTop / max, 0), 1);
+  }
+  document.addEventListener('scroll', e => readProgress(e.target), { capture: true, passive: true });
+
+  function render() {
+    const vh = window.innerHeight;
+    const p = progress;
+    const e = p * p * (3 - 2 * p); // smooth easing
+
+    // Rings: start apart near the top, glide down while converging, join at the end
+    const offset = 100 - 80 * e; // 100 = apart, 20 = joined
+    ringA.setAttribute('x', 180 - offset);
+    ringB.setAttribute('x', 180 + offset);
+    ringB2.setAttribute('x', 180 + offset);
+    ringsEl.style.top = (vh * 0.10 + e * vh * 0.62) + 'px';
+
+    heroText.style.opacity = String(Math.max(0, 1 - p * 3));
+    requestAnimationFrame(render);
+  }
+  requestAnimationFrame(render);
+
+  // Floating gold sparkles
+  (function () {
+    const cv = document.getElementById('sparkles');
+    const cx = cv.getContext('2d');
+    let W, H, dots = [];
+    function size() {
+      W = cv.width = window.innerWidth;
+      H = cv.height = window.innerHeight;
+    }
+    function make() {
+      return { x: Math.random() * W, y: Math.random() * H, r: Math.random() * 1.8 + 0.4,
+               vy: -(Math.random() * 0.25 + 0.08), vx: (Math.random() - 0.5) * 0.15,
+               t: Math.random() * Math.PI * 2 };
+    }
+    size();
+    dots = Array.from({ length: 45 }, make);
+    window.addEventListener('resize', size);
+    function draw() {
+      cx.clearRect(0, 0, W, H);
+      for (const d of dots) {
+        d.t += 0.02; d.x += d.vx; d.y += d.vy;
+        if (d.y < -5) { Object.assign(d, make(), { y: H + 5 }); }
+        const a = 0.35 + 0.35 * Math.sin(d.t);
+        cx.beginPath();
+        cx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+        cx.fillStyle = `rgba(245,220,154,${a})`;
+        cx.shadowColor = 'rgba(233,196,106,.9)';
+        cx.shadowBlur = 8;
+        cx.fill();
+      }
+      requestAnimationFrame(draw);
+    }
+    draw();
+  })();
+
+  // Gold burst on button tap
+  document.querySelectorAll('.btn').forEach(btn => {
+    btn.addEventListener('click', ev => {
+      for (let i = 0; i < 12; i++) {
+        const s = document.createElement('span');
+        s.className = 'burst';
+        s.textContent = Math.random() < 0.5 ? '♡' : '✦';
+        s.style.left = ev.clientX + 'px';
+        s.style.top = ev.clientY + 'px';
+        const ang = Math.random() * Math.PI * 2;
+        const dist = 40 + Math.random() * 60;
+        s.style.setProperty('--dx', Math.cos(ang) * dist + 'px');
+        s.style.setProperty('--dy', Math.sin(ang) * dist + 'px');
+        document.body.appendChild(s);
+        setTimeout(() => s.remove(), 1000);
+      }
+    });
+  });
+
+  // Countdown to the wedding day
+  const target = new Date('2027-01-07T00:00:00').getTime();
+  function tick() {
+    const diff = Math.max(0, target - Date.now());
+    document.getElementById('d').textContent = String(Math.floor(diff / 86400000)).padStart(2, '0');
+    document.getElementById('h').textContent = String(Math.floor(diff / 3600000) % 24).padStart(2, '0');
+    document.getElementById('m').textContent = String(Math.floor(diff / 60000) % 60).padStart(2, '0');
+    document.getElementById('s').textContent = String(Math.floor(diff / 1000) % 60).padStart(2, '0');
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  // Fade-in on scroll
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('show'); obs.unobserve(en.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fade').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
